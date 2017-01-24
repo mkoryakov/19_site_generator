@@ -1,15 +1,35 @@
 <head>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <title>Энциклопедия</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/style.css">
+	<title> Энциклопедия </title>
 </head>
-<body>
-    <h1>{{ header_1 }}</h1>
-    <div class="row">
-	<div class="col-md-4">
-		{% for link in links %}
-			<li><a href="{{ link[link] }}">{{ link }}</a></li>
-	    	{% endfor %}
-	</div>
-  	<div class="col-md-4">asdf</div>
-    </div>
+    <h1 align="center"> Энциклопедия </h1>
+		{% for topic in topics %}
+    		{% if loop.index % 3 == 0 %}
+			    <div class="row">
+			{% endif %}
+			<div class="col-md-4">
+				<h3> {{ topic['title'] }} </h3>
+				<ul class="list-unstyled">
+				{% for article in articles %}
+					{% if topic['slug'] == article['topic'] %}
+						<li>
+							<span class="glyphicon glyphicon-chevron-right"></span>
+							{% if '<' in article['title'] %}
+								{% autoescape true %}
+								<a href="{{ 'articles/' + article['source'] }}"> {{ article['title'] }} </a>
+								{% endautoescape %}
+							{% else %}
+								<a href="{{ 'articles/' + article['source'] | e }}"> {{ article['title'] }} </a>
+							{% endif %}
+						</li>
+					{% endif %}
+				{% endfor %}
+				</ul>
+			</div>
+    		{% if loop.index % 3 == 0 %}
+			    </div>
+			{% endif %}
+		{% endfor %}
 </body>
