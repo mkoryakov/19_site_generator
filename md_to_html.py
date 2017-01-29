@@ -27,10 +27,13 @@ def save_text_to_file(file_path, text):
         f.write(text)
 
 
-def generate_html_page_from_template(template_name, context):
+def get_tempate(template_name):
     loader = FileSystemLoader('templates')
     env = Environment(loader=loader, trim_blocks=True, lstrip_blocks=True)
-    template = env.get_template(template_name)
+    return env.get_template(template_name)
+
+
+def generate_html_page_from_template(template, context):
     return template.render(context)
 
 
@@ -44,19 +47,21 @@ def generate_site(site_name, config):
         mkdir(articles_dir, mode=0o755)
     topics = config['topics']
     articles = config['articles']
-    template = 'article.html'
+    template_name = 'article.html'
     for article in articles:
         md_path = join('articles', article['source'])
         md_text = get_markdown_text(md_path)
         html_text = markdown_to_html(md_text)
         context = {'title': article['title'], 'text': html_text}
+        template = get_tempate(template_name)
         html_page = generate_html_page_from_template(template, context)
         root, ext = splitext(article['source'])
         article['source'] = '%s%s' % (root, '.html')
         html_path = join(articles_dir, article['source'])
         save_text_to_file(html_path, html_page)
-    template = 'index.html'
+    template_name = 'index.html'
     context = {'topics': topics, 'articles': articles}
+    template = get_tempate(template_name)
     html_page = generate_html_page_from_template(template, context)
     file_path = join(site_name, 'index.html')
     save_text_to_file(file_path, html_page)
