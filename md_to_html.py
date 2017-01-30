@@ -1,6 +1,7 @@
 from json import load
 from os import mkdir
 from os.path import exists, join, split, splitext
+from shutil import copytree
 from markdown import markdown
 from jinja2 import Environment, FileSystemLoader
 
@@ -25,6 +26,10 @@ def save_text_to_file(file_path, text):
         mkdir(dir_name, mode=0o755)
     with open(file_path, 'w') as f:
         f.write(text)
+
+
+def recurcive_copy_directory(src, dst):
+    copytree(src, dst)
 
 
 def get_tempate(template_name):
@@ -73,3 +78,4 @@ if __name__ == '__main__':
         mkdir(site_name, mode=0o755)
     config = load_data_from_json('config.json')
     generate_site(site_name, config)
+    recurcive_copy_directory('css', join(site_name, 'css'))

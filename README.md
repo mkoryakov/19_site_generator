@@ -1,7 +1,6 @@
 # Encyclopedia
 
-Cкрипт, который конвертирует статьи из формата _markdown_ в _html_ и делает из них небольшой статический сайт. Сайт будет помещён в каталог `encyclopedia`. Для улучшенного отображения страниц необходимо в каталог `encyclopedia` поместить каталог `css`.
-Результат работы скрипта доступен по адресу <https://mkoryakov.github.io/19_site_generator/encyclopedia/>
+Cкрипт, который конвертирует статьи из формата _markdown_ в _html_ и делает из них небольшой статический сайт. Сайт будет помещён в каталог `encyclopedia`. Результат работы скрипта доступен по [адресу](https://mkoryakov.github.io/19_site_generator/encyclopedia/).
 
 # Установка зависимостей скрипта
     $ pip install -r requirements.txt
