@@ -1,29 +1,27 @@
-body {
+.container {
   background-color: #ffffff;
   font-family: times;
-  margin-left: 10px;
-  margin-rigth: 10px;
+  text-align: justify;
+  font-size: 14pt;
+  font-weight: normal;
 }
-h1 {
+.page_header {
+  text-align: center;
   color: black;
   font-size: 34pt;
   font-weight: bold;
 }
-h3 {
+.header {
   color: black;
   font-size: 20pt;
   font-weight: bold;
 }
-ul {
+.articles-list {
   text-align: justify;
   font-size: 14pt;
   font-weight: normal;
 }
-a {
+.link {
   color: red
 }
-p {
-  text-align: justify;
-  font-size: 14pt;
-  font-weight: normal;
-}
+
