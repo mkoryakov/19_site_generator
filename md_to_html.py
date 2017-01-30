@@ -2,6 +2,7 @@ from json import load
 from os import mkdir
 from os.path import exists, join, split, splitext
 from shutil import copytree
+from urllib.parse import quote_plus
 from markdown import markdown
 from jinja2 import Environment, FileSystemLoader
 
@@ -32,6 +33,14 @@ def recurcive_copy_directory(src, dst):
     copytree(src, dst)
 
 
+def screening_secial_char_in_string(str):
+    screening_str = str.replace('?', '&amp;')
+    screening_str = screening_str.replace('<', '&lt;')
+    screening_str = screening_str.replace('>', '&gt;')
+    screening_str = screening_str.replace(' ', '&nbsp;')
+    return screening_str
+
+
 def get_tempate(template_name):
     loader = FileSystemLoader('templates')
     env = Environment(loader=loader, trim_blocks=True, lstrip_blocks=True)
@@ -57,6 +66,8 @@ def generate_site(site_name, config):
         md_path = join('articles', article['source'])
         md_text = get_markdown_text(md_path)
         html_text = markdown_to_html(md_text)
+        article['title'] = screening_secial_char_in_string(article['title'])
+        article['source'] = screening_secial_char_in_string(article['source'])
         context = {'title': article['title'], 'text': html_text}
         template = get_tempate(template_name)
         html_page = generate_html_page_from_template(template, context)
@@ -78,4 +89,5 @@ if __name__ == '__main__':
         mkdir(site_name, mode=0o755)
     config = load_data_from_json('config.json')
     generate_site(site_name, config)
-    recurcive_copy_directory('css', join(site_name, 'css'))
+    if not exists(join(site_name, 'css')):
+        recurcive_copy_directory('css', join(site_name, 'css'))

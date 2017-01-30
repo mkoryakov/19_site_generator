@@ -18,13 +18,7 @@
                         {% if topic['slug'] == article['topic'] %}
                             <li>
                                 <span class="glyphicon glyphicon-chevron-right"></span>
-                                {% if '<' in article['title'] %}
-                                    {% autoescape true %}
-                                    <a href="{{ 'articles/' + article['source'] }}"> {{ article['title'] }} </a>
-                                    {% endautoescape %}
-                                {% else %}
-                                    <a href="{{ 'articles/' + article['source'] | e }}"> {{ article['title'] }} </a>
-                                {% endif %}
+                                <a href="{{ 'articles/' + article['source'] | e }}"> {{ article['title'] }} </a>
                             </li>
                         {% endif %}
                     {% endfor %}
