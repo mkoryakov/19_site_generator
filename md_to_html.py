@@ -2,7 +2,6 @@ from json import load
 from os import mkdir
 from os.path import exists, join, split, splitext
 from shutil import copytree
-from urllib.parse import quote_plus
 from markdown import markdown
 from jinja2 import Environment, FileSystemLoader
 
