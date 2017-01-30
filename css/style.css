@@ -1,7 +1,9 @@
-.container {
+body {
   background-color: #ffffff;
   font-family: times;
   text-align: justify;
+}
+.container {
   font-size: 14pt;
   font-weight: normal;
 }
@@ -11,17 +13,17 @@
   font-size: 34pt;
   font-weight: bold;
 }
-.header {
+.container h3 {
+  text-align: justify;
   color: black;
   font-size: 20pt;
   font-weight: bold;
 }
 .articles-list {
   text-align: justify;
-  font-size: 14pt;
   font-weight: normal;
 }
-.link {
+.container a {
   color: red
 }
 

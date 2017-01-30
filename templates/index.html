@@ -13,13 +13,13 @@
                 <div class="row">
             {% endif %}
             <div class="col-md-4">
-                <h3 class="header"> {{ topic['title'] }} </h3>
+                <h3> {{ topic['title'] }} </h3>
                 <ul class="list-unstyled articles-list">
                     {% for article in articles %}
                         {% if topic['slug'] == article['topic'] %}
                             <li>
                                 <span class="glyphicon glyphicon-chevron-right"></span>
-                                <a class="link" href="{{ 'articles/' + article['source'] | urlencode }}"> {{ article['title'] | e }} </a>
+                                <a href="{{ 'articles/' + article['source'] | urlencode }}"> {{ article['title'] | e }} </a>
                             </li>
                         {% endif %}
                     {% endfor %}
