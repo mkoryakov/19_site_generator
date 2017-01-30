@@ -1,4 +1,5 @@
 from json import load
+from argparse import ArgumentParser
 from os import mkdir
 from os.path import exists, join, split, splitext
 from shutil import copytree
@@ -32,14 +33,6 @@ def recurcive_copy_directory(src, dst):
     copytree(src, dst)
 
 
-def screening_secial_char_in_string(str):
-    screening_str = str.replace('?', '&amp;')
-    screening_str = screening_str.replace('<', '&lt;')
-    screening_str = screening_str.replace('>', '&gt;')
-    screening_str = screening_str.replace(' ', '&nbsp;')
-    return screening_str
-
-
 def get_tempate(template_name):
     loader = FileSystemLoader('templates')
     env = Environment(loader=loader, trim_blocks=True, lstrip_blocks=True)
@@ -51,7 +44,7 @@ def generate_html_page_from_template(template, context):
 
 
 def markdown_to_html(text):
-    return markdown(text, extensions=['codehilite'])
+    return markdown(text, extensions=['codehilite'], safe_mode='escape')
 
 
 def generate_site(site_name, config):
@@ -65,8 +58,6 @@ def generate_site(site_name, config):
         md_path = join('articles', article['source'])
         md_text = get_markdown_text(md_path)
         html_text = markdown_to_html(md_text)
-        article['title'] = screening_secial_char_in_string(article['title'])
-        article['source'] = screening_secial_char_in_string(article['source'])
         context = {'title': article['title'], 'text': html_text}
         template = get_tempate(template_name)
         html_page = generate_html_page_from_template(template, context)
@@ -82,11 +73,20 @@ def generate_site(site_name, config):
     save_text_to_file(file_path, html_page)
 
 
+def get_config_file_name():
+    parser = ArgumentParser(prog='md_to_html',
+                            description='Скрипт конвертирует файлы формата md в html')
+    parser.add_argument('--config', help='файл постановки', type=str,
+                        default='config.json')
+    return parser.parse_args().config
+
+
 if __name__ == '__main__':
     site_name = 'encyclopedia'
     if not exists(site_name):
         mkdir(site_name, mode=0o755)
-    config = load_data_from_json('config.json')
+    config_file_name = get_config_file_name()
+    config = load_data_from_json(config_file_name)
     generate_site(site_name, config)
     if not exists(join(site_name, 'css')):
         recurcive_copy_directory('css', join(site_name, 'css'))

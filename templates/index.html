@@ -18,7 +18,7 @@
                         {% if topic['slug'] == article['topic'] %}
                             <li>
                                 <span class="glyphicon glyphicon-chevron-right"></span>
-                                <a href="{{ 'articles/' + article['source'] | e }}"> {{ article['title'] }} </a>
+                                <a href="{{ 'articles/' + article['source'] | urlencode }}"> {{ article['title'] | e }} </a>
                             </li>
                         {% endif %}
                     {% endfor %}
